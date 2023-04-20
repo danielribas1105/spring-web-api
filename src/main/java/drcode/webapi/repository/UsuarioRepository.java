@@ -1,5 +1,7 @@
 package drcode.webapi.repository;
 
+import drcode.webapi.handler.BusinessException;
+import drcode.webapi.handler.CampoObrigatorioException;
 import drcode.webapi.model.Usuario;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +12,16 @@ import java.util.List;
 public class UsuarioRepository {
 
     public void save(Usuario usuario){
-        System.out.println("SAVE - Recebendo o usuário na camada de repositório");
+        if(usuario.getLogin() == null)
+            throw new CampoObrigatorioException("login");
+        if(usuario.getPassword() == null)
+            throw new CampoObrigatorioException("password");
+
+        if(usuario.getId() == null)
+            System.out.println("SAVE - Recebendo o usuário na camada de repositório");
+        else
+            System.out.println("UPDATE - Recebendo o usuário na camada de repositório");
+
         System.out.println(usuario);
     }
     public void update(Usuario usuario){
